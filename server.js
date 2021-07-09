@@ -12,7 +12,7 @@ app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 app.use(
   cors({
-    origin: 'https://pd-library-crud-app.herokuapp.com/',
+    origin: 'https://dillweed5446.github.io/library_crud_front/',
     credentials: true
   }))
 
