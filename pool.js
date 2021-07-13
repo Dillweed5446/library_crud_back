@@ -3,7 +3,7 @@ require('dotenv').config()
 
 const pool = mariadb.createPool({
   socketPath: '/run/mysqld/mysqld.sock',
-  host: process.env.JAWSDB_MARIA_URL,
+  host: process.env.DB_HOST,
   user: process.env.DB_USER,
   password: process.env.DB_PASS,
   database: 'books_library',

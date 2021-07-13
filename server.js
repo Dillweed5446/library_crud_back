@@ -1,4 +1,5 @@
 const express = require('express')
+require('dotenv').config()
 const cors = require('cors')
 const dbGetCall = require('./read')
 const dbPostCall = require('./create')
@@ -8,13 +9,20 @@ const app = express()
 const router = express.Router()
 const PORT = process.env.PORT || 4000
 
+const whitelist = ['https://dillweed5446.github.io/library_crud_front/', 'https://dillweed5446.github.io']
+const corsOptions = {
+  origin: function (origin, callback) {
+    if (whitelist.indexOf(origin) !== -1) {
+      callback(null, true)
+    } else {
+      callback(new Error('Not allowed by CORS'))
+    }
+  }
+}
+
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
-app.use(
-  cors({
-    origin: 'https://dillweed5446.github.io/library_crud_front/',
-    credentials: true
-  }))
+app.use(cors(corsOptions))
 
 app.route('/api')
   .get((req, res) => {
@@ -23,7 +31,6 @@ app.route('/api')
       .catch(err => console.log(err))
   })
   .post((req, res) => {
-    console.log(Object.entries(JSON.parse(Object.keys(req.body)))) // Tracer code
     dbPostCall(req.body, req.query.table)
     res.send('Entry accepted!')
   })
@@ -32,10 +39,6 @@ app.route('/api')
     res.send('Entry changed.')
   })
   .delete((req, res) => {
-    console.log(Object.values(JSON.parse(Object.keys(req.body))))
-    console.log(Object.keys(JSON.parse(Object.keys(req.body))))
-    // const parseParam = Object.values(JSON.parse(Object.keys(params)))
-    // const queryParam = Object.keys(JSON.parse(Object.keys(params)))
     deleteEntry(req.body, req.query.table)
     res.send('Entry deleted.')
   })
