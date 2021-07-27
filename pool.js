@@ -1,6 +1,6 @@
 const mariadb = require('mariadb')
 require('dotenv').config()
-const SocksConnection = require('socksjs')
+const SocksConnection = require('sockjs')
 const fixieUrl = process.env.FIXIE_SOCKS_HOST
 // eslint-disable-next-line prefer-regex-literals
 const fixieValues = fixieUrl.split(new RegExp('[/(:\\/@)/]+'))
